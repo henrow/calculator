@@ -9,7 +9,7 @@ let display = document.querySelector('#display');
 let currentNum = 0;
 let lastNum = null;
 let currentOperator = null;
-let lastButton = null;
+let lastButton = 'number';
 let result = null;
 
 display.textContent = currentNum;
@@ -58,16 +58,11 @@ function updateOperator() {
 }
 
 function updateDisplay() {
-    if (currentNum === null) {
-        display.textContent = 0;
-    } else {
-        console.log(currentNum.length);
-        if (currentNum.length > 15) {
-            display.textContent = Number(currentNum).toExponential(3);
+        if (currentNum.toString().length > 15) {
+            display.textContent = Number(currentNum).toExponential(2);
         } else {
             display.textContent = Number(currentNum);  
         }
-    }
 }
 function add (a, b) {
     return +a + +b;
@@ -93,7 +88,7 @@ function reset() {
     currentNum = 0;
     lastNum = null;
     currentOperator = null;
-    lastButton = null;
+    lastButton = 'number';
     result = null;
     updateDisplay();
 }
@@ -117,7 +112,6 @@ function operate (operator, a, b) {
     }
     lastNum = currentNum;
     currentNum = result;
-    currentNum = currentNum;
     updateDisplay();
     currentOperator = null;
     lastButton = 'equals';

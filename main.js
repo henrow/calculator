@@ -78,6 +78,7 @@ function addDot () {
         console.log(currentNum);
         updateDisplay();
     }
+    lastButton = 'number';
 }
 
 function updateNumber() {

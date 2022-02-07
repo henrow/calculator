@@ -95,8 +95,8 @@ function updateOperator() {
 }
 
 function updateDisplay() {
-        let displayResult = Math.round(Number(currentNum)*1000)/1000;
-        if (displayResult.length > 15) {
+        const displayResult = +(Math.round(Number(currentNum) + 'e+3') + 'e-3');
+        if (displayResult.toString().length > 15) {
             display.textContent = displayResult.toExponential(2);
         } else {
             display.textContent = displayResult;  

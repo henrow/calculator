@@ -58,10 +58,11 @@ function updateOperator() {
 }
 
 function updateDisplay() {
-        if (currentNum.toString().length > 15) {
-            display.textContent = Number(currentNum).toExponential(2);
+        let displayResult = Math.round(Number(currentNum)*1000)/1000;
+        if (displayResult.length > 15) {
+            display.textContent = displayResult.toExponential(2);
         } else {
-            display.textContent = Number(currentNum);  
+            display.textContent = displayResult;  
         }
 }
 function add (a, b) {

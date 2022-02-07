@@ -5,7 +5,7 @@ const operatorBtns = document.querySelectorAll('.operator-btn');
 const resetBtn = document.querySelector('#reset');
 const equalsBtn = document.querySelector('#equals');
 const dotBtn = document.querySelector('#dot');
-
+const buttons = document.querySelectorAll('button');
 const calculatorArray = ['0','1','2','3','4','5','6','7','8','9','+', '-', '/', '*'];
 
 let display = document.querySelector('#display');
@@ -16,7 +16,6 @@ let lastButton = 'number';
 let result = null;
 
 window.addEventListener('keydown', keyboardHandler);
-window.addEventListener('keyup', keyboardHandler);
 
 numberBtns.forEach((button) => {
     button.addEventListener('click', updateNumber);
@@ -24,6 +23,12 @@ numberBtns.forEach((button) => {
 
 operatorBtns.forEach((button) => {
     button.addEventListener('click', updateOperator);
+});
+
+buttons.forEach((button) => {
+    button.addEventListener('transitionend', ()=> {
+        button.classList.remove('active');
+    });
 });
 
 resetBtn.addEventListener('click', reset);
@@ -58,12 +63,8 @@ function keyboardHandler(event) {
     }
 
     function keypress(event) {
-        if (event.type === 'keydown') {
-            target.classList.add('active');
-            target.click();
-        } else {
-            target.classList.remove('active');
-        }
+        target.classList.add('active');
+        target.click();
     }
 
 }
@@ -109,7 +110,7 @@ function updateDisplay() {
 //        const displayResult = +(Math.round(Number(currentNum) + 'e+3') + 'e-3');
         const displayResult = currentNum; 
         if (displayResult.toString().length > 15) {
-            display.textContent = displayResult.toExponential(2);
+            display.textContent = Number(displayResult).toExponential(2);
         } else {
             display.textContent = displayResult;  
         }

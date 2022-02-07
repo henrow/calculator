@@ -9,10 +9,24 @@ html, body {
 
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
     font-family: "Courier New", sans-serif;
+
+    background-image: repeating-linear-gradient(135deg, white, white 50px, BurlyWood 50px, BurlyWood 60px);
+}
+
+header {
+    font-size: 3em;
+    color: BurlyWood;
+    font-weight: bold;
+
+    padding: 0 15px;
+    background-color: white;
+    border: 8px solid BurlyWood;
+    border-bottom: none;
 }
 
 main {
@@ -51,7 +65,7 @@ main {
 }
 button {
     border: 8px solid BurlyWood;
-    transition: border 250ms ease-out;
+    transition: border 100ms ease-out;
 }
 
 button.active,

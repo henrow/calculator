@@ -4,7 +4,7 @@ const numberBtns = document.querySelectorAll('.number-btn');
 const operatorBtns = document.querySelectorAll('.operator-btn');
 const resetBtn = document.querySelector('#reset');
 const equalsBtn = document.querySelector('#equals');
-
+const dotBtn = document.querySelector('#dot');
 
 const calculatorArray = ['0','1','2','3','4','5','6','7','8','9','+', '-', '/', '*'];
 
@@ -34,30 +34,30 @@ equalsBtn.addEventListener('click', () => {
     }
 });
 
+dotBtn.addEventListener('click', addDot);  
+
 // INITIALIZATION
 display.textContent = currentNum;
 updateDisplay();
 
 function keyboardHandler(event) {
     let key = event.key;
+    let target = null;
     if (calculatorArray.includes(key)) {
-        const target = document.getElementById(`${key}`);
-        if (event.type === 'keydown') {
-            target.classList.add('active');
-            target.click();
-        } else {
-            target.classList.remove('active');
-        }
+        target = document.getElementById(`${key}`);
+        keypress(event);
     } else if ( key === 'Enter' || key === '=' ) {
-        const target = document.getElementById('equals');
-        if (event.type === 'keydown') {
-            target.classList.add('active');
-            target.click();
-        } else {
-            target.classList.remove('active');
-        }
+        target = document.getElementById('equals');
+        keypress(event);
+    } else if ( key === '.' ) {
+        target = document.getElementById('dot');
+        keypress(event);
     } else if ( key === 'c' || key ==='C' ) {
-        const target = document.getElementById('reset');
+        target = document.getElementById('reset');
+        keypress(event);
+    }
+
+    function keypress(event) {
         if (event.type === 'keydown') {
             target.classList.add('active');
             target.click();
@@ -65,16 +65,27 @@ function keyboardHandler(event) {
             target.classList.remove('active');
         }
     }
-}
 
+}
+function addDot () {
+    if (lastButton === 'operator' || lastButton === 'equals') { 
+        lastNum = currentNum;
+        currentNum = 0;
+    }
+    if (!currentNum.toString().includes('.')) {
+        currentNum += '.';
+        console.log(currentNum);
+        updateDisplay();
+    }
+}
 
 function updateNumber() {
     if (lastButton === 'operator' || lastButton === 'equals') { 
         lastNum = currentNum;
         currentNum = 0;
     }
-    if (!currentNum) {
-        currentNum = this.id;
+    if (currentNum === 0) {
+        currentNum += Number(this.id);
     } else {
         currentNum += this.id.toString();
     }
@@ -95,7 +106,8 @@ function updateOperator() {
 }
 
 function updateDisplay() {
-        const displayResult = +(Math.round(Number(currentNum) + 'e+3') + 'e-3');
+//        const displayResult = +(Math.round(Number(currentNum) + 'e+3') + 'e-3');
+        const displayResult = currentNum; 
         if (displayResult.toString().length > 15) {
             display.textContent = displayResult.toExponential(2);
         } else {

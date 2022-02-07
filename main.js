@@ -5,6 +5,9 @@ const operatorBtns = document.querySelectorAll('.operator-btn');
 const resetBtn = document.querySelector('#reset');
 const equalsBtn = document.querySelector('#equals');
 
+
+const calculatorArray = ['0','1','2','3','4','5','6','7','8','9','+', '-', '/', '*'];
+
 let display = document.querySelector('#display');
 let currentNum = 0;
 let lastNum = null;
@@ -12,7 +15,8 @@ let currentOperator = null;
 let lastButton = 'number';
 let result = null;
 
-display.textContent = currentNum;
+window.addEventListener('keydown', keyboardHandler);
+
 numberBtns.forEach((button) => {
     button.addEventListener('click', updateNumber);
 });
@@ -29,7 +33,21 @@ equalsBtn.addEventListener('click', () => {
     }
 });
 
+// INITIALIZATION
+display.textContent = currentNum;
 updateDisplay();
+
+function keyboardHandler(event) {
+    let key = event.key;
+    if (calculatorArray.includes(key)) {
+        document.getElementById(`${key}`).click();
+    } else if ( key === 'Enter' || key === '=' ) {
+        document.getElementById('equals').click();
+    } else if ( key === 'c' || key ==='C' ) {
+        reset();
+    }
+}
+
 
 function updateNumber() {
     if (lastButton === 'operator' || lastButton === 'equals') { 
@@ -96,16 +114,16 @@ function reset() {
 
 function operate (operator, a, b) {
     switch (operator) {
-        case 'plus':
+        case '+':
             result = add(a, b);
             break;
-        case 'minus':
+        case '-':
             result = subtract(a, b);
             break;
-        case 'multiply':
+        case '*':
             result = multiply(a, b);
             break;
-        case 'divide':
+        case '/':
             result = divide(a, b);
             break;
         default:

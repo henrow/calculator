@@ -7,32 +7,35 @@
     <script src="main.js" defer></script>
 </head>
 <body>
-    <header>Calculator</header>
     <main>
-        <div id="display">10000</div>
-        <div id="buttons">
-            <div id="numberButtons">
-                <button class="number-btn" id="1">1</button>
-                <button class="number-btn" id="2">2</button>
-                <button class="number-btn" id="3">3</button>
-                <button class="number-btn" id="4">4</button>
-                <button class="number-btn" id="5">5</button>
-                <button class="number-btn" id="6">6</button>
-                <button class="number-btn" id="7">7</button>
-                <button class="number-btn" id="8">8</button>
-                <button class="number-btn" id="9">9</button>
-                <button class="number-btn" id="0">0</button>
-                <button class="operator" id="dot">.</button>
-                <button class="operator" id="equals">=</button>
+        <header>Calculator</header>
+        <div class="calculator">
+            <div id="display">10000</div>
+            <div id="buttons">
+                <div id="numberButtons">
+                    <button class="number-btn" id="1">1</button>
+                    <button class="number-btn" id="2">2</button>
+                    <button class="number-btn" id="3">3</button>
+                    <button class="number-btn" id="4">4</button>
+                    <button class="number-btn" id="5">5</button>
+                    <button class="number-btn" id="6">6</button>
+                    <button class="number-btn" id="7">7</button>
+                    <button class="number-btn" id="8">8</button>
+                    <button class="number-btn" id="9">9</button>
+                    <button class="number-btn" id="0">0</button>
+                    <button class="operator" id="dot">.</button>
+                    <button class="operator" id="equals">=</button>
+                </div>
+                <div id="operatorButtons">
+                    <button id="reset" class="operator-btn">C</button>
+                    <button class="operator-btn" id="+">+</button>
+                    <button class="operator-btn" id="-">-</button>
+                    <button class="operator-btn" id="/">/</button>
+                    <button class="operator-btn" id="*">*</button>
+                </div>
             </div>
-            <div id="operatorButtons">
-                <button id="reset" class="operator-btn">C</button>
-                <button class="operator-btn" id="+">+</button>
-                <button class="operator-btn" id="-">-</button>
-                <button class="operator-btn" id="/">/</button>
-                <button class="operator-btn" id="*">X</button>
-            </div>
-        </div>
-    </main>    
+        </div>    
+    </main>
+    <footer>Created by Peter Richard, for Odin, in 2022</footer>
 </body>
 </html>

@@ -16,6 +16,7 @@ let lastButton = 'number';
 let result = null;
 
 window.addEventListener('keydown', keyboardHandler);
+window.addEventListener('keyup', keyboardHandler);
 
 numberBtns.forEach((button) => {
     button.addEventListener('click', updateNumber);
@@ -40,11 +41,29 @@ updateDisplay();
 function keyboardHandler(event) {
     let key = event.key;
     if (calculatorArray.includes(key)) {
-        document.getElementById(`${key}`).click();
+        const target = document.getElementById(`${key}`);
+        if (event.type === 'keydown') {
+            target.classList.add('active');
+            target.click();
+        } else {
+            target.classList.remove('active');
+        }
     } else if ( key === 'Enter' || key === '=' ) {
-        document.getElementById('equals').click();
+        const target = document.getElementById('equals');
+        if (event.type === 'keydown') {
+            target.classList.add('active');
+            target.click();
+        } else {
+            target.classList.remove('active');
+        }
     } else if ( key === 'c' || key ==='C' ) {
-        reset();
+        const target = document.getElementById('reset');
+        if (event.type === 'keydown') {
+            target.classList.add('active');
+            target.click();
+        } else {
+            target.classList.remove('active');
+        }
     }
 }
 

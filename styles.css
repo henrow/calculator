@@ -51,6 +51,12 @@ main {
 }
 button {
     border: 8px solid BurlyWood;
+    transition: border 250ms ease-out;
+}
+
+button.active,
+button:active {
+    border-color: brown;
 }
 
 #numberButtons {

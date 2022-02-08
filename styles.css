@@ -46,7 +46,7 @@ header, footer {
 }
 .receipt {
     padding: 10px;
-    background: white;
+    background: #fdfdfb;
     width: 335px;
     color: DimGrey;
     position: absolute;

@@ -30,7 +30,7 @@ main {
 
 }
 header, footer {
-    font-size: 3em;
+    font-size: 2.5em;
     color: BurlyWood;
     font-weight: bold;
 
@@ -42,19 +42,23 @@ header, footer {
 }
 .receipt-holder {
     position: relative;
-    width: 335px;
+    width: 300px;
 }
 .receipt {
+    font-size: 0.8em;
     padding: 10px;
     background: #fdfdfb;
-    width: 335px;
+    width: 300px;
     color: DimGrey;
     position: absolute;
+}
+.receipt p {
+    margin-bottom: 3px;
 }
 
 
 footer {
-    font-size: 1.5em;
+    font-size: 1.2em;
     padding: 5px 15px;
     filter: drop-shadow(4px 4px 8px BurlyWood);
 }
@@ -66,8 +70,8 @@ footer {
     justify-content: center;
     align-items: center;
     background-color: AntiqueWhite;
-    padding: 40px;
-    border-radius: 20px;
+    padding: 30px 20px;
+    border-radius: 30px;
     border: 8px solid BurlyWood;
 }
 
@@ -76,16 +80,16 @@ footer {
     justify-content: flex-end;
     align-items: center;
 
-    width: 390px;
-    height: 90px;
-    padding: 0 10px;
+    width: 350px;
+    height: 70px;
+    padding: 0 8px;
 
-    font-size: 2.4em;
+    font-size: 2.2em;
 
     background: grey;
     margin-bottom: 35px;
     color: white;
-    border: 9px solid DimGrey;
+    border: 7px solid DimGrey;
     border-radius: 20px;
 }
 
@@ -98,7 +102,7 @@ button {
 
     font-family: "Courier New", sans-serif;
     font-weight: bold;
-    border: 8px solid BurlyWood;
+    border: 7px solid BurlyWood;
     transition: border 100ms ease-out;
 }
 
@@ -110,7 +114,7 @@ button:active {
 #numberButtons {
     display: flex;
     flex-flow: row wrap;
-    width: 300px;
+    width: 280px;
     justify-content: center;
     align-content: flex-end;
     gap: 10px;
@@ -118,12 +122,12 @@ button:active {
 
 #numberButtons button {
     flex: 0 0 auto;
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     background: yellow;
     color: red;
     font-size: 2em;
-    border-radius: 45px;
+    border-radius: 40px;
 }
 
 #numberButtons .operator {
@@ -139,11 +143,11 @@ button:active {
 
 #operatorButtons button {
     flex: 0 0 auto;
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     background: blue;
     color: white;
     font-size: 2em;
-    border-radius: 45px;
+    border-radius: 40px;
 }
 

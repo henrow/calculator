@@ -12,6 +12,7 @@ const resetBtn = document.querySelector('#reset');
 
 let currentNum = 0;
 let currentOperator = null;
+let exact = true;
 let lastButton = 'number';
 let lastNum = null;
 let result = null;
@@ -122,6 +123,7 @@ function divide (a, b) {
 }
 
 function operate (operator, a, b) {
+    exact = true;
     switch (operator) {
         case '+':
             result = add(a, b);
@@ -141,7 +143,7 @@ function operate (operator, a, b) {
     console.log(`${formatNumber(lastNum)} ${currentOperator} ${formatNumber(currentNum)} = ${formatNumber(result)}`);
 
     let resultText = document.createElement("p");
-    resultText.textContent = `${formatNumber(lastNum)} ${currentOperator} ${formatNumber(currentNum)} = ${formatNumber(result)}`;
+    resultText.textContent = `${formatNumber(lastNum)} ${currentOperator} ${formatNumber(currentNum)} ${ exact ? '=' : '≈' } ${formatNumber(result)}`;
     receipt.prepend(resultText);
 
     lastNum = currentNum;
@@ -164,6 +166,7 @@ function formatNumber(input) {
     let thisResult = input;
     if (thisResult.toString().length > 15) {
         thisResult = +(Math.round(Number(thisResult) + 'e+3') + 'e-3');
+        exact = false;
         if (thisResult.toString().length > 15) {
             thisResult = Number(thisResult).toExponential(2);
         }

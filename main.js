@@ -1,21 +1,35 @@
 'use strict'
 
-const numberBtns = document.querySelectorAll('.number-btn');
-const operatorBtns = document.querySelectorAll('.operator-btn');
-const resetBtn = document.querySelector('#reset');
-const equalsBtn = document.querySelector('#equals');
-const dotBtn = document.querySelector('#dot');
 const buttons = document.querySelectorAll('button');
 const calculatorArray = ['0','1','2','3','4','5','6','7','8','9','+', '-', '/', '*'];
+const display = document.querySelector('#display');
+const dotBtn = document.querySelector('#dot');
+const equalsBtn = document.querySelector('#equals');
+const numberBtns = document.querySelectorAll('.number-btn');
+const operatorBtns = document.querySelectorAll('.operator-btn');
+const receipt = document.querySelector('.receipt');
+const resetBtn = document.querySelector('#reset');
 
-let display = document.querySelector('#display');
 let currentNum = 0;
-let lastNum = null;
 let currentOperator = null;
 let lastButton = 'number';
+let lastNum = null;
 let result = null;
 
-window.addEventListener('keydown', keyboardHandler);
+// Event Listeners
+buttons.forEach((button) => {
+    button.addEventListener('transitionend', ()=> {
+        button.classList.remove('active');
+    });
+});
+
+dotBtn.addEventListener('click', addDot);  
+
+equalsBtn.addEventListener('click', () => {
+    if (lastButton === 'number' && lastNum && currentOperator) {
+        operate(currentOperator, lastNum, currentNum);
+    }
+});
 
 numberBtns.forEach((button) => {
     button.addEventListener('click', updateNumber);
@@ -25,49 +39,18 @@ operatorBtns.forEach((button) => {
     button.addEventListener('click', updateOperator);
 });
 
-buttons.forEach((button) => {
-    button.addEventListener('transitionend', ()=> {
-        button.classList.remove('active');
-    });
-});
-
 resetBtn.addEventListener('click', reset);
 
-equalsBtn.addEventListener('click', () => {
-    if (lastButton === 'number' && lastNum && currentOperator) {
-        operate(currentOperator, lastNum, currentNum);
-    }
-});
+window.addEventListener('keydown', keyboardHandler);
 
-dotBtn.addEventListener('click', addDot);  
+
 
 // INITIALIZATION
 display.textContent = currentNum;
 updateDisplay();
 
-function keyboardHandler(event) {
-    let key = event.key;
-    let target = null;
-    if (calculatorArray.includes(key)) {
-        target = document.getElementById(`${key}`);
-        keypress(event);
-    } else if ( key === 'Enter' || key === '=' ) {
-        target = document.getElementById('equals');
-        keypress(event);
-    } else if ( key === '.' ) {
-        target = document.getElementById('dot');
-        keypress(event);
-    } else if ( key === 'c' || key ==='C' ) {
-        target = document.getElementById('reset');
-        keypress(event);
-    }
+// FUNCTIONS
 
-    function keypress(event) {
-        target.classList.add('active');
-        target.click();
-    }
-
-}
 function addDot () {
     if (lastButton === 'operator' || lastButton === 'equals') { 
         lastNum = currentNum;
@@ -79,6 +62,118 @@ function addDot () {
         updateDisplay();
     }
     lastButton = 'number';
+}
+
+function backspaceNumber() {
+    if (currentNum.toString() !== '0') {
+        currentNum = currentNum.toString().slice(0, -1);
+        if ( currentNum === "" ) {
+            currentNum = 0;
+        }
+    }
+    updateDisplay();
+}
+
+
+function keyboardHandler(event) {
+    let key = event.key;
+    let target = null;
+    if (calculatorArray.includes(key)) {
+        target = document.getElementById(`${key}`);
+        keyClick(event);
+    } else if ( key === 'Enter' || key === '=' ) {
+        target = document.getElementById('equals');
+        keyClick(event);
+    } else if ( key === '.' ) {
+        target = document.getElementById('dot');
+        keyClick(event);
+    } else if ( key === 'c' || key ==='C' ) {
+        target = document.getElementById('reset');
+        keyClick(event);
+    } else if ( key === 'Backspace' ) {
+        backspaceNumber();
+    }
+
+    function keyClick(event) {
+        target.classList.add('active');
+        target.click();
+    }
+}
+
+// MATH FUNCTIONS
+function add (a, b) {
+    return +a + +b;
+}
+
+function subtract (a, b) {
+    return a - b;
+}
+
+function multiply (a, b) {
+    return a * b;
+}
+
+function divide (a, b) {
+    if (b == 0) {
+        return '0 ERROR';
+    } else {
+        return a / b;
+    }
+}
+
+function operate (operator, a, b) {
+    switch (operator) {
+        case '+':
+            result = add(a, b);
+            break;
+        case '-':
+            result = subtract(a, b);
+            break;
+        case '*':
+            result = multiply(a, b);
+            break;
+        case '/':
+            result = divide(a, b);
+            break;
+        default:
+            console.log("sorry im dumb");
+    }
+    console.log(`${formatNumber(lastNum)} ${currentOperator} ${formatNumber(currentNum)} = ${formatNumber(result)}`);
+
+    let resultText = document.createElement("p");
+    resultText.textContent = `${formatNumber(lastNum)} ${currentOperator} ${formatNumber(currentNum)} = ${formatNumber(result)}`;
+    receipt.prepend(resultText);
+
+    lastNum = currentNum;
+    currentNum = result;
+    updateDisplay();
+    currentOperator = null;
+    lastButton = 'equals';
+}
+
+function reset() {
+    currentNum = 0;
+    lastNum = null;
+    currentOperator = null;
+    lastButton = 'number';
+    result = null;
+    updateDisplay();
+}
+
+function formatNumber(input) {
+    let thisResult = input;
+    if (thisResult.toString().length > 15) {
+        thisResult = +(Math.round(Number(thisResult) + 'e+3') + 'e-3');
+        if (thisResult.toString().length > 15) {
+            thisResult = Number(thisResult).toExponential(2);
+        }
+    }
+    return thisResult;
+}
+
+function updateDisplay() {
+        let displayResult = currentNum; 
+        display.textContent = formatNumber(displayResult);
 }
 
 function updateNumber() {
@@ -107,64 +202,3 @@ function updateOperator() {
     lastButton = 'operator';
 }
 
-function updateDisplay() {
-//        const displayResult = +(Math.round(Number(currentNum) + 'e+3') + 'e-3');
-        const displayResult = currentNum; 
-        if (displayResult.toString().length > 15) {
-            display.textContent = Number(displayResult).toExponential(2);
-        } else {
-            display.textContent = displayResult;  
-        }
-}
-function add (a, b) {
-    return +a + +b;
-}
-
-function subtract (a, b) {
-    return a - b;
-}
-
-function multiply (a, b) {
-    return a * b;
-}
-
-function divide (a, b) {
-    if (b == 0) {
-        return '0 ERROR';
-    } else {
-        return a / b;
-    }
-}
-
-function reset() {
-    currentNum = 0;
-    lastNum = null;
-    currentOperator = null;
-    lastButton = 'number';
-    result = null;
-    updateDisplay();
-}
-
-function operate (operator, a, b) {
-    switch (operator) {
-        case '+':
-            result = add(a, b);
-            break;
-        case '-':
-            result = subtract(a, b);
-            break;
-        case '*':
-            result = multiply(a, b);
-            break;
-        case '/':
-            result = divide(a, b);
-            break;
-        default:
-            console.log("sorry im dumb");
-    }
-    lastNum = currentNum;
-    currentNum = result;
-    updateDisplay();
-    currentOperator = null;
-    lastButton = 'equals';
-}

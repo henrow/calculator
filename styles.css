@@ -5,6 +5,7 @@
 
 html, body {
     height: 100%;
+    overflow:hidden;
 }
 
 body {
@@ -24,6 +25,8 @@ main {
     align-items: center;
 
     flex: 1;
+    filter: drop-shadow(4px 4px 8px BurlyWood);
+
 
 }
 header, footer {
@@ -37,10 +40,23 @@ header, footer {
     border-bottom: none;
     border-radius: 20px 20px 0 0;
 }
+.receipt-holder {
+    position: relative;
+    width: 335px;
+}
+.receipt {
+    padding: 10px;
+    background: white;
+    width: 335px;
+    color: DimGrey;
+    position: absolute;
+}
+
 
 footer {
     font-size: 1.5em;
     padding: 5px 15px;
+    filter: drop-shadow(4px 4px 8px BurlyWood);
 }
 
 

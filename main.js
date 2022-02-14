@@ -59,7 +59,6 @@ function addDot () {
     }
     if (!currentNum.toString().includes('.')) {
         currentNum += '.';
-        console.log(currentNum);
         updateDisplay();
     }
     lastButton = 'number';
@@ -140,7 +139,8 @@ function operate (operator, a, b) {
         default:
             console.log("sorry im dumb");
     }
-    console.log(`${formatNumber(lastNum)} ${currentOperator} ${formatNumber(currentNum)} = ${formatNumber(result)}`);
+
+    if (result.toString().length > 15) { exact = false; }
 
     let resultText = document.createElement("p");
     resultText.textContent = `${formatNumber(lastNum)} ${currentOperator} ${formatNumber(currentNum)} ${ exact ? '=' : '≈' } ${formatNumber(result)}`;
@@ -166,7 +166,6 @@ function formatNumber(input) {
     let thisResult = input;
     if (thisResult.toString().length > 15) {
         thisResult = +(Math.round(Number(thisResult) + 'e+3') + 'e-3');
-        exact = false;
         if (thisResult.toString().length > 15) {
             thisResult = Number(thisResult).toExponential(2);
         }
